@@ -1,3 +1,5 @@
 FROM ubuntu:latest
 RUN mkdir -p /home/platzi
 WORKDIR /home/platzi
+RUN apt update -y
+RUN apt install curl -y
