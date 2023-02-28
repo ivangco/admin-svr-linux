@@ -9,7 +9,10 @@ Por ejemplo, el comando ps aux | grep platzi imprime los procesos activos del si
 
 ## Comandos
  
-ps: Muestra los procesos corriendo. Modificadores:
+```bash
+ps
+```
+Muestra los procesos corriendo. Modificadores:
 
 ```bash
 aux
