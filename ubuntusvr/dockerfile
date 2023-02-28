@@ -3,3 +3,11 @@ RUN mkdir -p /home/platzi
 WORKDIR /home/platzi
 RUN apt update -y
 RUN apt install curl -y
+RUN apt install net-tools -y 
+RUN apt install iproute2 -y
+RUN apt install dnsutils -y
+RUN apt install zsh -y
+RUN apt install git -y
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+RUN apt install wget -y
