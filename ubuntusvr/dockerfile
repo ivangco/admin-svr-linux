@@ -11,3 +11,5 @@ RUN apt install git -y
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 RUN apt install wget -y
+RUN apt install tzdata -y
+RUN apt install snap
