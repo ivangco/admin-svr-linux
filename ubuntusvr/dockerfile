@@ -11,5 +11,41 @@ RUN apt install git -y
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 RUN apt install wget -y
-RUN apt install tzdata -y
-RUN apt install snap
+RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC  apt -y install tzdata  
+
+#Prerequisitos nagios
+RUN apt install -y build-essential libgd-dev openssl libssl-dev unzip apache2 php gcc libdbi-perl libdbd-mysql-perl
+
+#Instalacion de nagios
+
+WORKDIR /tmp
+
+RUN wget -O nagioscore.tar.gz https://github.com/NagiosEnterprises/nagioscore/archive/nagios-4.4.6.tar.gz
+
+RUN tar xzf nagioscore.tar.gz
+
+WORKDIR /tmp/nagioscore-nagios-4.4.6
+RUN echo "--with-https-conf=/etc/apache2/sites-enabled" | ./configure 
+RUN make all
+RUN make install-groups-users
+RUN usermod -a -G nagios www-data
+RUN make install
+RUN make install-daemoninit
+RUN make install-commandmode
+RUN make install-config
+RUN make install-webconf
+RUN a2enmod rewrite
+RUN a2enmod cgi 
+
+RUN htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmins
+EXPOSE 80
+
+
+WORKDIR /
+COPY ./ejecutables/entrypiont.sh /entrypiont.sh
+
+
+WORKDIR /home/platzi
+
+#inicar sercivios
+ENTRYPOINT [ "/entrypiont.sh" ]
