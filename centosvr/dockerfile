@@ -1,0 +1,26 @@
+FROM centos:7
+RUN mkdir -p /home/platzi
+WORKDIR /home/platzi
+RUN yum check -y
+RUN yum update -y
+RUN yum install curl -y
+RUN yum install net-tools -y 
+RUN yum install iproute -y 
+RUN yum install zsh -y
+RUN yum install git -y
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUN yum install -y build-essential libgd-dev openssl libssl-dev unzip apache2 php gcc libdbi-perl libdbd-mysql-perl
+
+
+EXPOSE 80
+
+
+WORKDIR /
+COPY ./ejecutables/entrypiont.sh /entrypiont.sh
+
+RUN chmod 111 /entrypiont.sh
+
+WORKDIR /home/platzi
+
+#inicar sercivios
+ENTRYPOINT [ "/entrypiont.sh" ]

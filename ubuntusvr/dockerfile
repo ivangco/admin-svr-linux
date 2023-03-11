@@ -44,6 +44,7 @@ EXPOSE 80
 WORKDIR /
 COPY ./ejecutables/entrypiont.sh /entrypiont.sh
 
+RUN chmod 111 /entrypiont.sh
 
 WORKDIR /home/platzi
 
