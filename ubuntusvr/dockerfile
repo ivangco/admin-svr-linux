@@ -38,6 +38,9 @@ RUN a2enmod rewrite
 RUN a2enmod cgi 
 
 RUN htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmins
+
+RUN apt install aptitude bind9 -y
+
 EXPOSE 80
 
 
