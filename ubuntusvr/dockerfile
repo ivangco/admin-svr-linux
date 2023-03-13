@@ -40,8 +40,11 @@ RUN a2enmod cgi
 RUN htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmins
 
 RUN apt install aptitude bind9 -y
-
+RUN apt install nginx -y
+RUN apt install vim -y
+COPY ./conf/ngnix/default /etc/nginx/sites-enabled/default
 EXPOSE 80
+EXPOSE 81
 
 
 WORKDIR /
