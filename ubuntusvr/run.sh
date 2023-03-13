@@ -1,1 +1,1 @@
-docker run -it ubuntu-platzi:latest bash
+docker run -it ubuntu-platzi:latest zsh

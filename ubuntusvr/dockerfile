@@ -37,22 +37,54 @@ RUN make install-webconf
 RUN a2enmod rewrite
 RUN a2enmod cgi 
 
-RUN htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmins
+RUN htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
 
 RUN apt install aptitude bind9 -y
 RUN apt install nginx -y
 RUN apt install vim -y
+RUN apt-cache pkgnames | grep python3
+RUN apt-get install python3 -y
 COPY ./conf/ngnix/default /etc/nginx/sites-enabled/default
 EXPOSE 80
 EXPOSE 81
 
+WORKDIR /home/platzi
+
+RUN curl -L -O https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh
+RUN chmod 111 install.sh
+RUN API_KEY='55d1e232e4b674491a574f70dd5969a2' sh ./install.sh -y
+RUN apt install -y nmap
+RUN apt install mysql-server -y
+
+RUN apt install -y autoconf libc6 libmcrypt-dev libssl-dev bc
+RUN apt install -y gawk dc snmp libnet-snmp-perl gettext libperl-dev
+RUN apt install -y  libdbi-dev libldap2-dev
+RUN apt  install -y libmysqlclient-dev smbclient qstat fping
+RUN wget https://nagios-plugins.org/download/nagios-plugins-2.4.3.tar.gz
+RUN tar -zxvf nagios-plugins-2.4.3.tar.gz
+WORKDIR /home/platzi/nagios-plugins-2.4.3 
+
+RUN ./configure 
+RUN make
+RUN make install
+
+
+WORKDIR /home/platzi
+RUN wget https://labs.consol.de/assets/downloads/nagios/check_mysql_health-2.2.2.tar.gz  -O mysqlplugin.tar.gz
+
+RUN tar xzvf mysqlplugin.tar.gz
+
+WORKDIR /home/platzi/check_mysql_health-2.2.2
+    
+RUN ./configure 
+RUN make
+RUN make install
 
 WORKDIR /
 COPY ./ejecutables/entrypiont.sh /entrypiont.sh
 
 RUN chmod 111 /entrypiont.sh
 
-WORKDIR /home/platzi
 
 #inicar sercivios
 ENTRYPOINT [ "/entrypiont.sh" ]
