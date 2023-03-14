@@ -80,6 +80,10 @@ RUN ./configure
 RUN make
 RUN make install
 
+RUN apt install cron
+
+
+
 WORKDIR /
 COPY ./ejecutables/entrypiont.sh /entrypiont.sh
 
