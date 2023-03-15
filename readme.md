@@ -13,4 +13,4 @@ Contiene anotaciones y practicas de administracion basica de servidores basado e
 - cron -> crontab -> cron job
 
 >**nota:** puedes ejecutar todo en 
-[PlayWhitDocker]([https://](https://labs.play-with-docker.com/)) 
+[PlayWhitDocker](https://labs.play-with-docker.com/)
